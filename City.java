@@ -90,6 +90,15 @@ public class City{
 				}
 			}
 		}
+
+		if(panel.isArmaggedon()){
+			suffering = true;
+			population -= 10;
+			if(population < 10){
+				population = 10;
+			}
+
+		}
 	}
 
 	public long getAge(){return age;}

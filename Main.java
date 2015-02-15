@@ -231,6 +231,7 @@ class GamePanel extends JPanel implements KeyListener, MouseListener{
     	}
     }
 
+    public boolean isArmaggedon(){return armageddon;}
     public boolean getRain(){return rain;}
     public int getWaterLevel(){return waterLevel;}
 
