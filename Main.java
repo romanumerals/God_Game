@@ -201,17 +201,27 @@ class GamePanel extends JPanel implements KeyListener, MouseListener{
 
     	if(rain){
     		waterCounter += 1;
-    		if(waterCounter > 500){
+    		if(waterCounter > 400){
     			waterLevel+= 1;
     			waterCounter = 0;
     		}
     	}else{
     		waterCounter -= 1;
-    		if(waterCounter < -500){
+    		if(waterCounter < -400){
 				waterLevel -= 1;
 				waterCounter = 0;
 			}
     	}
+
+    	for(int x = 0; x < 300; x++){
+    		for(int y = 0; y < 300; y++){
+    			WorldTile temp = mainFrame.getMapAt(x, y);
+    			if(temp.getBiome() == WorldTile.Biome.WASTE && (int)(Math.random() * 10000) == 1 && !armageddon){
+    				temp.setBiome(WorldTile.Biome.GRASSLAND);
+    			}
+    		}
+    	}
+
 
     	if(ifMousePressed){
     		Point mouse = MouseInfo.getPointerInfo().getLocation();
@@ -224,7 +234,7 @@ class GamePanel extends JPanel implements KeyListener, MouseListener{
 						if(Math.abs(x1) + Math.abs(y1) <= 2){
 							WorldTile temp = mainFrame.getMapAt(x-x1, y-y1);
 							temp.setBiome(WorldTile.Biome.WASTE);
-						}
+						}	
 					}
 				}
 			}

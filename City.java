@@ -32,24 +32,14 @@ public class City{
 		age += 1;
 		// population increase
 		int newpop = 0;
-		for(int i = 0; i < population / 10; i++){
-			if((int)(Math.random()* 100) == 1){
+		for(int i = 0; i < population / 10 + getFarmCount() - getWasteCount(); i++){
+			if((int)(Math.random() * population) == 1){
 				newpop += 1;
 			}
 		}
 
-		int farmcount = 0;
-		for(int x1 = -10; x1 < 10; x1++){
-			for(int y1 = -10; y1 < 10; y1++){
-				if(world[x/2+x1][y/2+y1].getBiome() == WorldTile.Biome.FARM){
-					farmcount += 1;
-				}
-			}
-		}
-		newpop += farmcount / 2;
-
 		population += newpop;
-		if(population/10 > Math.pow(size, size)){
+		if(population > size*size*16){
 			size += 2;
 		}
 
@@ -57,18 +47,18 @@ public class City{
 		
 		if(progress >= population* population / 2){
 			while(true){
-				progress -= Math.pow(population, 1.5);
 				int dx = (int)(Math.random() * 20) -10;
 				int dy = (int)(Math.random() * 20) -10;
 				if(world[x/2+dx][y/2+dy].getHeight() >= 128){
 					world[x/2+dx][y/2+dy].setBiome(WorldTile.Biome.FARM);
 					time_since_growth = 0;
+					progress -= population * population / 2;
 					break;
 				}
 			}
 		}else{
 			time_since_growth++;
-			if(time_since_growth> 1000){
+			if(time_since_growth> 200){
 				suffering = true;
 			}
 		}
@@ -94,6 +84,8 @@ public class City{
 		if(panel.isArmaggedon()){
 			suffering = true;
 			population -= 10;
+			progress -= population / 25;
+			//progress still comes from the faithful
 			if(population < 10){
 				population = 10;
 			}
